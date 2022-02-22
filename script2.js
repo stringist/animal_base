@@ -71,7 +71,6 @@ function filterList(category) {
         filteredArray = filteredList;
         displayList(filteredList);
     } else {
-
         filteredArray = allAnimals;
         displayList(allAnimals);
     }
@@ -99,17 +98,14 @@ function sortList(sortBy) {
 
     function compare(a, b) {
         if (a[sortBy] < b[sortBy]) {
-            console.log("compare returns true, a.sortby is", a.sortBy);
             return -1;
         } else {
-            console.log("compare returns false, b.sortby is", b.sortBy)
             return 1;
         }
     }
     console.log(sortedList);
     displayList(currentList);
 }
-
 
 function displayList(animals) {
     // clear the list
