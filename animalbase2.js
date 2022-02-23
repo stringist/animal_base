@@ -31,7 +31,6 @@ function armButtons() {
     });
 }
 
-
 async function loadJSON() {
     const response = await fetch("animals.json");
     const jsonData = await response.json();
@@ -43,7 +42,6 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
     allAnimals = jsonData.map(prepareObject);
     // TODO: This might not be the function we want to call first
-    // if statements here
     displayList(allAnimals);
 }
 
@@ -66,83 +64,51 @@ function selectFilter(event) {
     filterList(filter);
 }
 
+function filterList(category) {
+    if (category != "*") {
+        const filteredList = allAnimals.filter(isAnimalType);
+        filteredArray = filteredList;
+        displayList(filteredList);
+    } else {
+
+        filteredArray = allAnimals;
+        displayList(allAnimals);
+    }
+
+    function isAnimalType(animal) {
+        console.log(category);
+        if (animal.type === category) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 function selectSort(event) {
     const sortBy = event.target.dataset.sort;
-    console.log(sortBy);
+    sortList(sortBy);
+}
+
+function sortList(sortBy) {
+    console.log(`user is trying to sort by ${sortBy}`);
     let currentList = filteredArray;
+    let sortedList = currentList.sort(compare);
+    console.log(currentList);
 
-    if (sortBy === "name") {
-        let sortedList = currentList.sort(compareName);
-        displayList(sortedList);
-        console.log(sortedList);
+    function compare(a, b) {
+        if (a[sortBy] < b[sortBy]) {
+            console.log("compare returns true, a[sortby] is", a[sortBy]);
+            return -1;
+        } else {
+            console.log("compare returns false, b[sortby] is", b[sortBy])
+            return 1;
+        }
     }
-    if (sortBy === "desc") {
-        let sortedList = currentList.sort(compareDesc);
-        displayList(sortedList);
-    }
-    if (sortBy === "type") {
-        let sortedList = currentList.sort(compareType);
-        displayList(sortedList);
-    }
-    if (sortBy === "age") {
-        let sortedList = currentList.sort(compareAge);
-        displayList(sortedList);
-    }
+    console.log(sortedList);
+    displayList(currentList);
 }
 
-function filterList(category) {
-    let filteredList = allAnimals;
-    if (category === "cat") {
-        filteredList = allAnimals.filter(isCat);
-    }
-
-    if (category === "dog") {
-        filteredList = allAnimals.filter(isDog);
-    }
-    filteredArray = filteredList;
-    displayList(filteredList);
-}
-
-function isCat(animal) {
-    return animal.type === "cat";
-}
-
-function isDog(animal) {
-    return animal.type === "dog";
-}
-
-function compareName(a, b) {
-    if (a.name > b.name) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function compareDesc(a, b) {
-    if (a.desc > b.desc) {
-        return true;
-    } else {
-        return false;
-    }
-}
-``
-
-function compareType(a, b) {
-    if (a.type > b.type) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function compareAge(a, b) {
-    if (a.age > b.age) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 function displayList(animals) {
     // clear the list
