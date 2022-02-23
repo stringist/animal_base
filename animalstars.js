@@ -108,12 +108,12 @@ function displayAnimal(animal) {
     document.querySelector("#list tbody").appendChild(clone);
 }
 
-let isTrue = false;
+// let isTrue = false;
 
-if (isTrue === true) {
-    isTrue = false;
-} else {
-    isTrue = true;
-}
+// if (isTrue === true) {
+//     isTrue = false;
+// } else {
+//     isTrue = true;
+// }
 
 // or if(isTrue) {blah blah}
