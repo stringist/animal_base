@@ -94,7 +94,6 @@ function sortList(sortBy) {
     console.log(`user is trying to sort by ${sortBy}`);
     let currentList = filteredArray;
     let sortedList = currentList.sort(compare);
-    console.log(currentList);
 
     function compare(a, b) {
         if (a[sortBy] < b[sortBy]) {
