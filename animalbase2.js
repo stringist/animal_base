@@ -60,7 +60,6 @@ function prepareObject(jsonObject) {
     animal.type = texts[3];
     animal.age = jsonObject.age;
 
-    filterList(animal.type);
     return animal;
 }
 
@@ -97,8 +96,13 @@ function filterList(filteredList) {
 }
 
 function selectSort(event) {
-    settings.sortBy = event.target.dataset.sort;
-    settings.sortDir = event.target.dataset.sortDirection;
+    const sortBy = event.target.dataset.sort;
+    const sortDir = event.target.dataset.sortDirection;
+    // find old sortBy elelment
+    const oldElement = document.querySelector(`[data-sort='${settings.sortBy}']`);
+    oldElement.classList.remove("sortBy");
+    // indicate active sort
+    event.target.classList.add("sortBy");
     // toggle direction
     if (settings.sortDir === "asc") {
         event.target.dataset.sortDirection = "desc";
@@ -106,7 +110,7 @@ function selectSort(event) {
         event.target.dataset.sortDirection = "asc";
     }
     console.log(`User selected ${settings.sortBy} - ${settings.sortDir}`);
-    buildList(settings.sortBy);
+    setSort(sortBy, sortDir);
 }
 
 function setSort(sortBy, sortDir) {
