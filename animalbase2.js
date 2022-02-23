@@ -104,7 +104,7 @@ function selectSort(event) {
     // indicate active sort
     event.target.classList.add("sortby");
     // toggle direction
-    if (settings.sortDir === "asc") {
+    if (sortDir === "asc") {
         event.target.dataset.sortDirection = "desc";
     } else {
         event.target.dataset.sortDirection = "asc";
