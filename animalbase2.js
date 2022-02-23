@@ -3,7 +3,7 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let allAnimals = [];
-let filteredArray = [];
+// let filteredArray = [];
 // The prototype for all animals:
 const Animal = {
     name: "",
@@ -11,6 +11,12 @@ const Animal = {
     type: "",
     age: 0,
 };
+
+const settings = {
+    filterBy: "all",
+    sortBy: "name",
+    sortDir: "asc"
+}
 
 function start() {
     console.log("ready");
@@ -61,61 +67,79 @@ function prepareObject(jsonObject) {
 function selectFilter(event) {
     const filter = event.target.dataset.filter;
     console.log(`user selected ${filter}`);
-    filterList(filter);
+    // filterList(filter);
+    setFilter(filter);
 }
 
-function filterList(category) {
-    if (category != "*") {
-        const filteredList = allAnimals.filter(isAnimalType);
-        filteredArray = filteredList;
-        displayList(filteredList);
+function setFilter(filter) {
+    settings.filterBy = filter;
+    buildList();
+}
+
+function filterList(filteredList) {
+    if (settings.filterBy != "*") {
+        filteredList = allAnimals.filter(isAnimalType);
+        // displayList(filteredList);
     } else {
-        filteredArray = allAnimals;
-        displayList(allAnimals);
+        filteredList = allAnimals;
+        // displayList(allAnimals);
     }
 
     function isAnimalType(animal) {
-        console.log(category);
-        if (animal.type === category) {
+        console.log(settings.filterBy);
+        if (animal.type === settings.filterBy) {
             return true;
         } else {
             return false;
         }
     }
+    return filteredList;
 }
 
 function selectSort(event) {
-    const sortBy = event.target.dataset.sort;
-    const sortDir = event.target.dataset.sortDirection;
+    settings.sortBy = event.target.dataset.sort;
+    settings.sortDir = event.target.dataset.sortDirection;
     // toggle direction
-    if (sortDir === "asc") {
+    if (settings.sortDir === "asc") {
         event.target.dataset.sortDirection = "desc";
     } else {
         event.target.dataset.sortDirection = "asc";
     }
-    console.log(`User selected ${sortBy} - ${sortDir}`);
-    sortList(sortBy);
+    console.log(`User selected ${settings.sortBy} - ${settings.sortDir}`);
+    buildList(settings.sortBy);
 }
 
-function sortList(sortBy, sortDir) {
-    let currentList = filteredArray;
+function setSort(sortBy, sortDir) {
+    settings.sortBy = sortBy;
+    settings.sortDir = sortDir;
+    buildList();
+}
+
+function sortList(sortedList) {
     let direction = 1;
 
-    let sortedList = currentList.sort(compare);
-    if (sortDir === "desc") {
+    if (settings.sortDir === "desc") {
         direction = -1;
     } else {
         direction = 1;
     }
 
-    function compare(a, b) {
-        if (a[sortBy] < b[sortBy]) {
+    sortedList = sortedList.sort(sortByProperty);
+
+    function sortByProperty(animalA, animalB) {
+        if (animalA[settings.sortBy] < animalB[settings.sortBy]) {
             return -1 * direction;
         } else {
             return 1 * direction;
         }
     }
     console.log(sortedList);
+    return sortedList;
+}
+
+function buildList() {
+    const currentList = filterList(allAnimals);
+    const sortedList = sortList(currentList);
     displayList(sortedList);
 }
 
