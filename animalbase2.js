@@ -42,7 +42,7 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
     allAnimals = jsonData.map(prepareObject);
     // TODO: This might not be the function we want to call first
-    displayList(allAnimals);
+    // displayList(allAnimals);
 }
 
 function prepareObject(jsonObject) {
@@ -70,7 +70,6 @@ function filterList(category) {
         filteredArray = filteredList;
         displayList(filteredList);
     } else {
-
         filteredArray = allAnimals;
         displayList(allAnimals);
     }
@@ -87,27 +86,38 @@ function filterList(category) {
 
 function selectSort(event) {
     const sortBy = event.target.dataset.sort;
+    const sortDir = event.target.dataset.sortDirection;
+    // toggle direction
+    if (sortDir === "asc") {
+        event.target.dataset.sortDirection = "desc";
+    } else {
+        event.target.dataset.sortDirection = "asc";
+    }
+    console.log(`User selected ${sortBy} - ${sortDir}`);
     sortList(sortBy);
 }
 
-function sortList(sortBy) {
-    console.log(`user is trying to sort by ${sortBy}`);
+function sortList(sortBy, sortDir) {
     let currentList = filteredArray;
+    let direction = 1;
+
     let sortedList = currentList.sort(compare);
+    if (sortDir === "desc") {
+        direction = -1;
+    } else {
+        direction = 1;
+    }
 
     function compare(a, b) {
         if (a[sortBy] < b[sortBy]) {
-            console.log("compare returns true, a[sortby] is", a[sortBy]);
-            return -1;
+            return -1 * direction;
         } else {
-            console.log("compare returns false, b[sortby] is", b[sortBy])
-            return 1;
+            return 1 * direction;
         }
     }
     console.log(sortedList);
-    displayList(currentList);
+    displayList(sortedList);
 }
-
 
 function displayList(animals) {
     // clear the list
