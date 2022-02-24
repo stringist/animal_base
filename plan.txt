@@ -7,3 +7,18 @@ Stars plan
 --get star status
 3. Controller
 --add user interactivity to turn stars on and off
+
+Winners plan
+1. model
+-- add winner status
+2. view
+-- add visible winners (fixed values)
+--get winner status from model
+--display winner status
+3. Controller
+--(fake winners) add a toggle button to make each animal a winner
+--design logic for the rules
+--implement the logic with multiple basic functions
+add user interface to logic
+4. view--hardcoded dialog boxes
+--dynamic dialog boxes
