@@ -188,9 +188,9 @@ function displayAnimal(animal) {
         buildList();
     }
 
-    clone.querySelector("[data-field=winner").dataset.winner = animal.winner;
+    clone.querySelector(`[data-field='winner']`).dataset.winner = animal.winner;
     clone
-        .querySelector("[data-field=winner")
+        .querySelector(`[data-field='winner']`)
         .addEventListener("click", toggleWinner);
 
     function toggleWinner() {
@@ -226,24 +226,61 @@ function tryToMakeWinner(selectedAnimal) {
 
     function removeOther(other) {
         // ask user to ignore or remove 'other'
+        document.querySelector("#onlyonekind").classList.remove("dialog");
+        document.querySelector("#onlyonekind").classList.add("dialog.show");
+        document.querySelector("#onlyonekind .closebutton").addEventListener("click", closeDialog);
+        document.querySelector("#removeother").addEventListener("click", clickRemoveOther);
 
         // if ignore, do nothing
+
+        function closeDialog() {
+            document.querySelector("#onlyonekind").classList.add("dialog");
+            document.querySelector("#onlyonekind .closebutton").removeEventListener("click", closeDialog);
+            document.querySelector("#removeother").removeEventListener("click", clickRemoveOther);
+        }
         // if remove other:
-        removePrevWinner(other);
-        makeWinner(selectedAnimal);
+
+        function clickRemoveOther() {
+            console.log("removeOther is clicked");
+            removePrevWinner(other);
+            makeWinner(selectedAnimal);
+            buildList();
+            closeDialog();
+        }
+
     }
 
     function removeAOrB(winnerA, winnerB) {
-        // ask user to ignore or remove A or B
 
-        // if ignore, do nothing
-        // if remove A:
-        removePrevWinner(winnerA);
-        makeWinner(selectedAnimal);
+        document.querySelector("#onlytwowinners").classList.remove("dialog");
+        document.querySelector("#onlytwowinners").classList.add("dialog.show");
+        document.querySelector("#onlytwowinners .closebutton").addEventListener("click", closeDialog);
+        document.querySelector("#removeA").addEventListener("click", clickRemoveA);
+        document.querySelector("#removeB").addEventListener("click", clickRemoveB);
 
-        //  else if remove B
-        removePrevWinner(winnerB);
-        makeWinner(selectedAnimal);
+        function closeDialog() {
+            document.querySelector("#onlytwowinners").classList.add("dialog");
+            document.querySelector("#onlytwowinners").classList.remove("dialog.show");
+            document.querySelector("#onlytwowinners .closebutton").removeEventListener("click", closeDialog);
+            document.querySelector("#removeA").removeEventListener("click", clickRemoveA);
+            document.querySelector("#removeB").removeEventListener("click", clickRemoveB);
+        }
+
+        function clickRemoveA() {
+            removePrevWinner(winnerA);
+            makeWinner(selectedAnimal);
+            buildList();
+            closeDialog();
+        }
+
+        function clickRemoveB() {
+            removePrevWinner(winnerB);
+            makeWinner(selectedAnimal);
+            buildList();
+            closeDialog();
+        }
+
+
     }
 
     function removePrevWinner(winnerAnimal) {
