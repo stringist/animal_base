@@ -24,10 +24,8 @@ const Animal = {
 
 function start() {
     console.log("ready");
-
     loadJSON();
     armButtons();
-    // FUTURE: Add event-listeners to filter and sort buttons
 }
 
 function armButtons() {
@@ -84,14 +82,11 @@ function setFilter(filter) {
 function filterList(filteredList) {
     if (settings.filterBy != "*") {
         filteredList = allAnimals.filter(isAnimalType);
-        // displayList(filteredList);
     } else {
         filteredList = allAnimals;
-        // displayList(allAnimals);
     }
 
     function isAnimalType(animal) {
-        console.log(settings.filterBy);
         if (animal.type === settings.filterBy) {
             return true;
         } else {
@@ -143,7 +138,6 @@ function sortList(sortedList) {
             return 1 * direction;
         }
     }
-    console.log(sortedList);
     return sortedList;
 }
 
@@ -152,12 +146,6 @@ function buildList() {
     const sortedList = sortList(currentList);
     displayList(sortedList);
 }
-
-// function buildList() {
-//     const currentList = allAnimals; // FUTURE: Filter and sort currentList before displaying
-
-//     displayList(currentList);
-// }
 
 function displayList(animals) {
     // clear the display
@@ -192,7 +180,6 @@ function displayAnimal(animal) {
         .addEventListener("click", toggleStar);
 
     function toggleStar() {
-        console.log("toggleStar");
         if (animal.star) {
             animal.star = false;
         } else {
@@ -202,17 +189,68 @@ function displayAnimal(animal) {
     }
 
     clone.querySelector("[data-field=winner").dataset.winner = animal.winner;
-    clone.querySelector("[data-field=winner").addEventListener("click", toggleWinner);
+    clone
+        .querySelector("[data-field=winner")
+        .addEventListener("click", toggleWinner);
 
     function toggleWinner() {
-        console.log("toggleWinner");
         if (animal.winner) {
             animal.winner = false;
         } else {
-            animal.winner = true;
+            tryToMakeWinner(animal);
         }
         buildList();
     }
     // append clone to list
     document.querySelector("#list tbody").appendChild(clone);
+}
+
+function tryToMakeWinner(selectedAnimal) {
+    const winners = allAnimals.filter((animal) => animal.winner);
+
+    const numberOfWinners = winners.length;
+    const other = winners
+        .filter((animal) => animal.type === selectedAnimal.type)
+        .shift();
+    // if there is another of the same type
+    if (other !== undefined) {
+        console.log("There can only be one winner of each type!");
+        removeOther(other);
+    } else if (numberOfWinners >= 2) {
+        console.log("There can only be two winners!");
+        removeAOrB(winners[0], winners[1]);
+    } else { makeWinner(selectedAnimal); }
+    console.log(`There are ${numberOfWinners} winners`);
+
+    console.log(other);
+
+    function removeOther(other) {
+        // ask user to ignore or remove 'other'
+
+        // if ignore, do nothing
+        // if remove other:
+        removePrevWinner(other);
+        makeWinner(selectedAnimal);
+    }
+
+    function removeAOrB(winnerA, winnerB) {
+        // ask user to ignore or remove A or B
+
+        // if ignore, do nothing
+        // if remove A:
+        removePrevWinner(winnerA);
+        makeWinner(selectedAnimal);
+
+        //  else if remove B
+        removePrevWinner(winnerB);
+        makeWinner(selectedAnimal);
+    }
+
+    function removePrevWinner(winnerAnimal) {
+        winnerAnimal.winner = false;
+    }
+
+    function makeWinner(animal) {
+        animal.winner = true;
+    }
 }
