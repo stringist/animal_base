@@ -1,0 +1,9 @@
+Stars plan
+-remember MVC
+1. model 
+--add star to model
+2.view
+--add visible star
+--get star status
+3. Controller
+--add user interactivity to turn stars on and off
