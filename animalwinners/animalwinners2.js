@@ -19,6 +19,7 @@ const Animal = {
     type: "",
     age: 0,
     star: false,
+    winner: false,
 };
 
 function start() {
@@ -194,14 +195,21 @@ function displayAnimal(animal) {
         console.log("toggleStar");
         if (animal.star) {
             animal.star = false;
-            // let newAnimal = animal;
-            //allAnimals.splice([animal], newAnimal);
-            //displayList(allAnimals);
         } else {
             animal.star = true;
-            //let newAnimal = animal;
-            // allAnimals.splice([animal], newAnimal);
-            // displayList(allAnimals);
+        }
+        buildList();
+    }
+
+    clone.querySelector("[data-field=winner").dataset.winner = animal.winner;
+    clone.querySelector("[data-field=winner").addEventListener("click", toggleWinner);
+
+    function toggleWinner() {
+        console.log("toggleWinner");
+        if (animal.winner) {
+            animal.winner = false;
+        } else {
+            animal.winner = true;
         }
         buildList();
     }
