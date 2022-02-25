@@ -20,5 +20,8 @@ Winners plan
 --design logic for the rules
 --implement the logic with multiple basic functions
 add user interface to logic
-4. view--hardcoded dialog boxes
+4. view--
+hardcoded dialog boxes
+--ask user if they want to remove A or B or ignore
+--ask user if they want to remove other or ignore
 --dynamic dialog boxes

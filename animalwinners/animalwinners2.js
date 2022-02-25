@@ -230,6 +230,8 @@ function tryToMakeWinner(selectedAnimal) {
         document.querySelector("#onlyonekind").classList.add("dialog.show");
         document.querySelector("#onlyonekind .closebutton").addEventListener("click", closeDialog);
         document.querySelector("#removeother").addEventListener("click", clickRemoveOther);
+        document.querySelector("#removeother .animal1").textContent = `${other.name}?`
+
 
         // if ignore, do nothing
 
@@ -257,6 +259,9 @@ function tryToMakeWinner(selectedAnimal) {
         document.querySelector("#onlytwowinners .closebutton").addEventListener("click", closeDialog);
         document.querySelector("#removeA").addEventListener("click", clickRemoveA);
         document.querySelector("#removeB").addEventListener("click", clickRemoveB);
+        document.querySelector("#removeA [data-field=winnerA]").textContent = `${winnerA.name} the ${winnerA.type}`;
+        document.querySelector("#removeB [data-field=winnerB]").textContent = `${winnerB.name} the ${winnerB.type}`;
+
 
         function closeDialog() {
             document.querySelector("#onlytwowinners").classList.add("dialog");
