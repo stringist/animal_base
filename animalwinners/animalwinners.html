@@ -23,7 +23,7 @@
     <table id="list">
         <thead>
             <tr id="sorting">
-                <th data-action="sort" data-sort-direction="asc" data-sort="winner">🏆</th>
+                <th data-action="sort" data-sort-direction="asc" data-sort="winner">Winner</th>
                 <th data-action="sort" data-sort-direction="asc" data-sort="star">⭐</th>
                 <th data-action="sort" data-sort-direction="asc" data-sort="name">Name</th>
                 <th data-action="sort" data-sort-direction="asc" data-sort="type">Type</th>
@@ -39,7 +39,7 @@
 
     <template id="animal">
       <tr>
-        <td data-field="winner">🏆</td>
+        <td data-field="winner" data-winner="false"></td>
         <td data-field="star">⭐</td>
         <td data-field="name">NAME</td>
         <td data-field="type">TYPE</td>
@@ -55,8 +55,8 @@
             <button class="closebutton">close</button>
             <h1>You can only have two winners!</h1>
             <h2>Remove one, before you appoint more</h2>
-            <p><button data-action="remove1">remove</button> <span class="animal1">NAME, the TYPE</span></p>
-            <p><button data-action="remove2">remove</button> <span class="animal2">NAME, the TYPE</span></p>
+            <p><button id="removeA" data-action="remove1">remove <span data-field="winnerA">NAME, the TYPE</span></button></p>
+            <p><button id="removeB" data-action="remove2">remove <span data-field="winnerB">NAME, the TYPE</span></button></p>
         </div>
     </div>
 
@@ -65,7 +65,7 @@
             <button class="closebutton">close</button>
             <h1>You can only have one winner of each type</h1>
             <h2>Remove the other if you want to appoint a new one</h2>
-            <p><button data-action="remove1">remove</button> <span class="animal1">NAME, the TYPE</span></p>
+            <p><button id="removeother" data-action="remove1">remove <span class="animal1">NAME, the TYPE</span></button></p>
         </div>
     </div>
 
